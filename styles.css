@@ -1,0 +1,80 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: black;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.matrix {
+  position: absolute;
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.matrix span {
+  display: block;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-100vh); }
+  100% { transform: translateY(100vh); }
+}
+
+.countdown, .message {
+  position: absolute;
+  color: white;
+  font-size: 100px;
+  font-family: Arial, sans-serif;
+  opacity: 0;
+  transition: opacity 1s, transform 1s;
+}
+
+.morph {
+  animation: morph 2s infinite;
+}
+
+@keyframes morph {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.5); letter-spacing: 10px; }
+  100% { opacity: 0; transform: scale(0); }
+}
+
+/* Nút bánh kem sinh nhật */
+#start-btn {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+  font-size: 1.1rem !important;
+  padding: 0.5em 1em !important;
+  border: none;
+  border-radius: 1em !important;
+  background: none !important;
+  color: #d72660;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+  box-shadow: none !important;
+  cursor: pointer;
+  outline: none;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s;
+}
+#start-btn:active {
+  transform: translate(-50%, -50%) scale(0.97);
+}
+#start-btn::before,
+#start-btn::after,
+#start-btn span.candle-flame {
+  display: none !important;
+}

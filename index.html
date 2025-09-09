@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HPBD Thúy Hằng!</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <button id="start-btn" aria-label="Touch me" style="background:none;border:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10000;cursor:pointer;outline:none;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+    <img src="banhkem.png" alt="Birthday Cake" style="width:110px;height:auto;display:block;margin:0 auto 0.3em auto;filter:drop-shadow(0 2px 12px #fffbe7);" />
+    <span style="margin-top:-10px;font-size:1.2rem;font-family:'Comic Sans MS',cursive,sans-serif;color:#d72660;text-shadow:0 2px 8px #fffbe7;letter-spacing:1px;display:block;text-align:center;">Touch me</span>
+  </button>
+  <audio id="bg-audio" src="audio/music.mp3" loop autoplay muted style="display:none"></audio>
+  <script>
+    // Thử phát nhạc tự động: bật muted, sau đó bỏ muted sau 500ms
+    window.addEventListener('DOMContentLoaded', function() {
+      var audio = document.getElementById('bg-audio');
+      if (audio) {
+        audio.muted = true;
+        var playPromise = audio.play();
+        setTimeout(function() {
+          audio.muted = false;
+        }, 500);
+        if (playPromise !== undefined) {
+          playPromise.catch(function() {
+            // Nếu vẫn bị chặn, phát khi người dùng chạm/click lần đầu
+            var unlock = function() {
+              audio.muted = false;
+              audio.play();
+              document.body.removeEventListener('touchstart', unlock);
+              document.body.removeEventListener('click', unlock);
+            };
+            document.body.addEventListener('touchstart', unlock, { once: true });
+            document.body.addEventListener('click', unlock, { once: true });
+          });
+        }
+      }
+    });
+    // Ẩn các hiệu ứng, chữ, nhạc cho đến khi bấm nút
+    document.addEventListener('DOMContentLoaded', function() {
+      var btn = document.getElementById('start-btn');
+      var audio = document.getElementById('bg-audio');
+      var matrix = document.getElementById('matrix');
+      var countdown = document.getElementById('countdown');
+      var message = document.getElementById('message');
+      if (matrix) matrix.style.display = 'none';
+      if (countdown) countdown.style.display = 'none';
+      if (message) message.style.display = 'none';
+      if (audio) audio.pause();
+      btn.style.display = 'block';
+      btn.addEventListener('click', function() {
+        btn.style.display = 'none';
+        if (matrix) matrix.style.display = '';
+        if (countdown) countdown.style.display = '';
+        if (message) message.style.display = '';
+        if (audio) {
+          audio.muted = false;
+          audio.play();
+        }
+        // Bắt đầu hiệu ứng JS (script.js)
+        if (typeof startSequence === 'function') startSequence();
+      });
+    });
+  </script>
+  <div id="matrix" class="matrix"></div>
+  <div id="countdown" class="countdown"></div>
+  <div id="message" class="message"></div>
+  <script src="script.js"></script>
+</body>
+</html>
